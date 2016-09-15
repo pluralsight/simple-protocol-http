@@ -35,16 +35,17 @@ npm i --save simple-protocol-http
 
 This module exposes a few function variations with lesser-used arguments pre-curried in.
 
-The whole enchilada, i.e. full referential transparency:
+This is what I like to use for most things:
+
 ```
-const { get, post, put, remove} = require('simple-protocol-http').full
+const { get, post, put, remove} = require('simple-protocol-http')
 
 Function Signatures
 
-get(fetch, fetchOptions, url)
-post(fetch, fetchOptions, url, payload)
-put(fetch, fetchOptions, url, payload)
-remove(fetch, fetchOptions, url)
+get(url)
+post(url, payload)
+put(url, payload)
+remove(url)
 
 ```
 
@@ -62,17 +63,16 @@ remove(fetchOptions, url)
 
 ```
 
-With fetch and fetch options pre-curried in.  This is what I like to use for most things:
-
+The whole enchilada, i.e. full referential transparency:
 ```
-const { get, post, put, remove} = require('simple-protocol-http')
+const { get, post, put, remove} = require('simple-protocol-http').full
 
 Function Signatures
 
-get(url)
-post(url, payload)
-put(url, payload)
-remove(url)
+get(fetch, fetchOptions, url)
+post(fetch, fetchOptions, url, payload)
+put(fetch, fetchOptions, url, payload)
+remove(fetch, fetchOptions, url)
 
 ```
 
