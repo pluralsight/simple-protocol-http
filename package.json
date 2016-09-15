@@ -1,0 +1,32 @@
+{
+  "name": "simple-http-protocol",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./src/**/*.spec.js",
+    "build": "babel ./src --out-dir ./lib"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
+    "mocha": "^3.0.2",
+    "ramda": "^0.22.1",
+    "safe-errors": "0.0.3"
+  },
+  "standard": {
+    "globals": [
+      "it",
+      "describe",
+      "beforeEach",
+      "afterEach",
+      "before",
+      "after"
+    ]
+  },
+  "devDependencies": {
+    "co": "^4.6.0",
+    "express": "^4.14.0"
+  }
+}
