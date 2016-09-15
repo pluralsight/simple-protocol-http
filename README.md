@@ -74,7 +74,7 @@ remove(url, payload)
 
 ### For successful / non-200-range responses
 ```
-const { get } = require('simple-protocol-http').defaults
+const { get } = require('simple-protocol-http')
 let result = await get('http://www.example.com/api')
 ```
 If the server returns this with a 200 status code:
@@ -100,7 +100,7 @@ The value of result is:
 
 ### For error / non-200-range responses:
 ```
-const { get } = require('simple-protocol-http').defaults
+const { get } = require('simple-protocol-http')
 let result = await get('http://www.example.com/api')
 ```
 If the server returns this with a 400 status code:
@@ -130,7 +130,7 @@ The value of result is:
 
 ### For Success Responses:
 ```
-const { get } = require('simple-protocol-http').defaults
+const { get } = require('simple-protocol-http')
 let result = await get('http://www.example.com/api')
 ```
 If the server returns this:
@@ -159,7 +159,7 @@ This module will return this:
 
 ### For Unsuccessful Responses:
 ```
-const { get } = require('simple-protocol-http').defaults
+const { get } = require('simple-protocol-http')
 let result = await get('http://www.example.com/api')
 ```
 If the server returns this:
