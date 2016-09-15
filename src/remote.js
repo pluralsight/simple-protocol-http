@@ -2,32 +2,8 @@ const fetch = require('isomorphic-fetch')
 const { curry, merge, keys } = require('ramda')
 const { safep } = require('safe-errors')
 
-function remove (fetch, fetchOptions, url) {
-  let defaultOptions = {
-    method: 'DELETE',
-    credentials: 'include'
-  }
-
-  let options = merge(defaultOptions, fetchOptions)
-
-  return safep(fetch)(url, options)
-    .then(handleFetchResponse)
-}
-
-function put (fetch, fetchOptions, url, data) {
-  let defaultOptions = {
-    method: 'PUT',
-    credentials: 'include',
-    body: JSON.stringify(data || {}),
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8'
-    }
-  }
-
-  let options = merge(defaultOptions, fetchOptions)
-
-  return safep(fetch)(url, options)
-    .then(handleFetchResponse)
+const defaultHeaders = {
+  'Content-Type': 'application/json;charset=UTF-8'
 }
 
 function get (fetch, fetchOptions, url) {
@@ -36,10 +12,7 @@ function get (fetch, fetchOptions, url) {
     credentials: 'include'
   }
 
-  let options = merge(defaultOptions, fetchOptions)
-
-  return safep(fetch)(url, options)
-    .then(handleFetchResponse)
+  return makeRequestWithOptions(fetch, url, defaultOptions, fetchOptions)
 }
 
 function post (fetch, fetchOptions, url, data) {
@@ -47,13 +20,38 @@ function post (fetch, fetchOptions, url, data) {
     method: 'POST',
     credentials: 'include',
     body: JSON.stringify(data || {}),
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8'
-    }
+    headers: defaultHeaders
   }
 
-  let options = merge(defaultOptions, fetchOptions)
+  return makeRequestWithOptions(fetch, url, defaultOptions, fetchOptions)
+}
 
+function put (fetch, fetchOptions, url, data) {
+  let defaultOptions = {
+    method: 'PUT',
+    credentials: 'include',
+    body: JSON.stringify(data || {}),
+    headers: defaultHeaders
+  }
+
+  return makeRequestWithOptions(fetch, url, defaultOptions, fetchOptions)
+}
+
+function remove (fetch, fetchOptions, url) {
+  let defaultOptions = {
+    method: 'DELETE',
+    credentials: 'include'
+  }
+
+  return makeRequestWithOptions(fetch, url, defaultOptions, fetchOptions)
+}
+
+function makeRequestWithOptions (fetch, url, defaultOptions, fetchOptions) {
+  let options = mergeOptions(defaultOptions, fetchOptions)
+  return makeRequest(fetch, url, options)
+}
+
+function makeRequest (fetch, url, options) {
   return safep(fetch)(url, options)
     .then(handleFetchResponse)
 }
@@ -61,7 +59,7 @@ function post (fetch, fetchOptions, url, data) {
 function handleFetchResponse (result) {
   let httpResponse = result.payload
 
-  if (isProtocol(result) && notSuccessful(result)) {
+  if (isSimpleProtocol(result) && notSuccessful(result)) {
     return merge(result, {
       meta: getResponseMeta(httpResponse)
     })
@@ -87,29 +85,37 @@ function parseHttpResponseBody (res) {
   })
 }
 
+function mergeOptions (a, b) {
+  return merge(a, b)
+}
+
 const normalizeToProtocol = curry((httpResponse, payload) => {
-  if (isProtocol(payload)) {
-    return merge(payload, {
-      meta: getResponseMeta(httpResponse)
-    })
+  if (isSimpleProtocol(payload)) {
+    return addMetaToPayload(payload, httpResponse)
   } else {
-    return {
+    let successPayload = {
       success: true,
-      payload,
-      meta: getResponseMeta(httpResponse)
+      payload
     }
+    return addMetaToPayload(successPayload, httpResponse)
   }
 })
 
 function respondForHttpError (httpResponse) {
   return parseHttpResponseBody(httpResponse)
   .then((body) => {
-    return {
+    let errorPayload = {
       success: false,
-      error: body,
-      meta: getResponseMeta(httpResponse)
+      error: body
     }
+    return addMetaToPayload(errorPayload, httpResponse)
   }).then(normalizeToProtocol(httpResponse))
+}
+
+function addMetaToPayload (payload, httpResponse) {
+  return merge(payload, {
+    meta: getResponseMeta(httpResponse)
+  })
 }
 
 function getResponseMeta (httpResponse) {
@@ -120,7 +126,7 @@ function getResponseMeta (httpResponse) {
   }
 }
 
-function isProtocol (p) {
+function isSimpleProtocol (p) {
   if (p.success === true && p.payload) {
     return true
   }
