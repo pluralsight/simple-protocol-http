@@ -78,7 +78,7 @@ remove(fetch, fetchOptions, url)
 
 ## Example Using Standard Restful Endpoints
 
-### For successful / non-200-range responses
+### For successful / 200-range responses
 ```
 const { get } = require('simple-protocol-http')
 let result = await get('http://www.example.com/api')
