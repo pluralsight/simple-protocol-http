@@ -39,6 +39,8 @@ The whole enchilada, i.e. full referential transparency:
 ```
 const { get, post, put, remove} = require('simple-protocol-http').full
 
+Function Signatures
+
 get(fetch, fetchOptions, url)
 post(fetch, fetchOptions, url, payload)
 put(fetch, fetchOptions, url, payload)
@@ -51,6 +53,8 @@ With fetch pre-curried in:
 ```
 const { get, post, put, remove} = require('simple-protocol-http').options
 
+Function Signatures
+
 get(fetchOptions, url)
 post(fetchOptions, url, payload)
 put(fetchOptions, url, payload)
@@ -62,6 +66,8 @@ With fetch and fetch options pre-curried in:
 
 ```
 const { get, post, put, remove} = require('simple-protocol-http')
+
+Function Signatures
 
 get(url)
 post(url, payload)
