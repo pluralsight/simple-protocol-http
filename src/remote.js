@@ -57,13 +57,14 @@ function makeRequest (fetch, url, options) {
 }
 
 function handleFetchResponse (result) {
-  let httpResponse = result.payload
-
+  //  if fetch errors out, there is no http response
   if (isSimpleProtocol(result) && notSuccessful(result)) {
     return merge(result, {
-      meta: getResponseMeta(httpResponse)
+      meta: {}
     })
   }
+
+  let httpResponse = result.payload
 
   if (!httpResponse.ok) {
     return respondForHttpError(httpResponse)

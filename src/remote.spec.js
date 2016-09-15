@@ -10,7 +10,7 @@ const testRemove = () => remove(fetch, {}, 'http://localhost:3001')
 
 describe('simple protocol', () => {
   let stopServer
-  afterEach(() => stopServer())
+  afterEach(() => stopServer && stopServer())
 
   function validateTestHeader (result) {
     deep(result.meta.headers.test, 'test-header')
@@ -186,4 +186,12 @@ describe('simple protocol', () => {
       }))
     })
   })
+
+  it('should handle fetch error', co.wrap(function * () {
+    const testPost = post(fetch, {}, 'http://doesnotexist.nope')
+    let result = yield testPost({})
+    deep(result.success, false)
+    deep(result.error.name, 'FetchError')
+    deep(result.meta, {})
+  }))
 })
