@@ -1,6 +1,6 @@
 const co = require('co')
 const deep = require('assert').deepEqual
-const { post, get, put, remove } = require('./simple')
+const { post, get, put, remove } = require('./simple').options
 const { startServer } = require('./test/server')
 const defaultJsonHeader = 'application/json;charset=UTF-8'
 const apiUrl = 'http://localhost:3001'
