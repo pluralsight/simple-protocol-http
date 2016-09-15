@@ -2,11 +2,24 @@
 
 This module normalizes http responses using a simple, predictable protocol.  The http response body is parsed as JSON by default but gracefully falls back to text if the response body is not valid JSON.
 
-### For successful / non-200-range responses:
+### For successful / non-200-range responses
+```
+const { get } = require('simple-protocol-http').defaults
+let result = await get('http://www.example.com/api')
+```
+If the server returns this with a 200 status code:
+```
+{
+  value: 'foo'
+}
+```
+The value of result is:
 ```
 {
   success: true,
-  payload: {...}, // response body
+  payload: {
+    value: 'foo'
+  },
   meta: {
     status: 200,
     statusText: 'OK',
@@ -17,9 +30,24 @@ This module normalizes http responses using a simple, predictable protocol.  The
 
 ### For error / non-200-range responses:
 ```
+const { get } = require('simple-protocol-http').defaults
+let result = await get('http://www.example.com/api')
+```
+If the server returns this with a 400 status code:
+```
+{
+  type: 'ValidationError',
+  message: 'Some field is invalid'
+}
+```
+The value of result is:
+```
 {
   success: false,
-  error: {...}, // response body
+  error: {
+    type: 'ValidationError',
+    message: 'Some field is invalid'
+  },
   meta: {
     status: 400,
     statusText: 'Bad Request',
