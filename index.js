@@ -1,1 +1,1 @@
-module.exports = require('./lib/remote')
+module.exports = require('./lib/simple')
