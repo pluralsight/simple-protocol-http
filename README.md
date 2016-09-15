@@ -5,7 +5,7 @@ This module normalizes http responses using Simple Protocol.  The http response 
 ## What is simple protocol?
 
 Simple protocol is *simple*:  
-1) Never intentionally throw or swallow exceptions.  
+1) Never intentionally throw exceptions.  
 2) Return an object like this for a success:
 ```
 {
