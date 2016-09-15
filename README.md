@@ -31,6 +31,45 @@ That's it!  Both success and error cases are handled the same way and can follow
 npm i --save simple-protocol-http
 ```
 
+## Function Variations for Convenience
+
+This module exposes a few function variations with lesser-used arguments pre-curried in.
+
+The whole enchilada, i.e. full referential transparency:
+```
+const { get, post, put, remove} = require('simple-protocol-http').full
+
+get(fetch, fetchOptions, url)
+post(fetch, fetchOptions, url, payload)
+put(fetch, fetchOptions, url, payload)
+remove(fetch, fetchOptions, url, payload)
+
+```
+
+With fetch pre-curried in:
+
+```
+const { get, post, put, remove} = require('simple-protocol-http').options
+
+get(fetchOptions, url)
+post(fetchOptions, url, payload)
+put(fetchOptions, url, payload)
+remove(fetchOptions, url, payload)
+
+```
+
+With fetch and fetch options pre-curried in:
+
+```
+const { get, post, put, remove} = require('simple-protocol-http')
+
+get(url)
+post(url, payload)
+put(url, payload)
+remove(url, payload)
+
+```
+
 ## Example Using Standard Restful Endpoints
 
 ### For successful / non-200-range responses
