@@ -66,12 +66,16 @@ function handleFetchResponse (result) {
 
   let httpResponse = result.payload
 
-  if (!httpResponse.ok) {
-    return respondForHttpError(httpResponse)
+  if (httpResponse.ok) {
+    return respondForHttpSuccess(httpResponse)
   } else {
-    return parseHttpResponseBody(httpResponse)
-      .then(normalizeToProtocol(httpResponse))
+    return respondForHttpError(httpResponse)
   }
+}
+
+function respondForHttpSuccess (httpResponse) {
+  return parseHttpResponseBody(httpResponse)
+    .then(normalizeToProtocol(httpResponse))
 }
 
 function parseHttpResponseBody (res) {
