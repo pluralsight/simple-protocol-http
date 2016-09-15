@@ -44,7 +44,7 @@ Function Signatures
 get(fetch, fetchOptions, url)
 post(fetch, fetchOptions, url, payload)
 put(fetch, fetchOptions, url, payload)
-remove(fetch, fetchOptions, url, payload)
+remove(fetch, fetchOptions, url)
 
 ```
 
@@ -58,7 +58,7 @@ Function Signatures
 get(fetchOptions, url)
 post(fetchOptions, url, payload)
 put(fetchOptions, url, payload)
-remove(fetchOptions, url, payload)
+remove(fetchOptions, url)
 
 ```
 
@@ -72,7 +72,7 @@ Function Signatures
 get(url)
 post(url, payload)
 put(url, payload)
-remove(url, payload)
+remove(url)
 
 ```
 
