@@ -51,13 +51,19 @@ function makeRequestWithOptions (fetch, url, defaultOptions, fetchOptions) {
   return makeRequest(fetch, url, options)
 }
 
+function mergeOptions (a, b) {
+  return merge(a, b)
+}
+
 function makeRequest (fetch, url, options) {
   return safep(fetch)(url, options)
     .then(handleFetchResponse)
 }
 
 function handleFetchResponse (result) {
-  //  if fetch errors out, there is no http response
+  //  result should always be a simple protocol object.
+  //  if fetch errors out, there is no
+  //  http response and no http response meta
   if (notSuccessful(result)) {
     return merge(result, {
       meta: {}
@@ -75,46 +81,54 @@ function handleFetchResponse (result) {
 
 function respondForHttpSuccess (httpResponse) {
   return parseHttpResponseBody(httpResponse)
-    .then(normalizeToProtocol(httpResponse))
+    .then(normalizeToProtocol(httpResponse, true))
 }
-
-function parseHttpResponseBody (res) {
-  return res.text().then((body) => {
-    try {
-      return JSON.parse(body)
-    } catch (e) {
-      //  instead of an empty string,
-      //  pass back an empty object
-      return body || {}
-    }
-  })
-}
-
-function mergeOptions (a, b) {
-  return merge(a, b)
-}
-
-const normalizeToProtocol = curry((httpResponse, payload) => {
-  if (isSimpleProtocol(payload)) {
-    return addMetaToPayload(payload, httpResponse)
-  } else {
-    let successPayload = {
-      success: true,
-      payload
-    }
-    return addMetaToPayload(successPayload, httpResponse)
-  }
-})
 
 function respondForHttpError (httpResponse) {
   return parseHttpResponseBody(httpResponse)
-  .then((body) => {
-    let errorPayload = {
-      success: false,
-      error: body
-    }
-    return addMetaToPayload(errorPayload, httpResponse)
-  }).then(normalizeToProtocol(httpResponse))
+    .then(normalizeToProtocol(httpResponse, false))
+}
+
+function parseHttpResponseBody (res) {
+  return res
+  .text()
+  .then(safeParseJson)
+}
+
+function safeParseJson (s) {
+  try {
+    return JSON.parse(s)
+  } catch (e) {
+    //  instead of an empty string,
+    //  pass back an empty object
+    return s || {}
+  }
+}
+
+const normalizeToProtocol = curry((httpResponse, success, payload) => {
+  if (isSimpleProtocol(payload)) {
+    return addMetaToPayload(payload, httpResponse)
+  } else if (success) {
+    let successResult = buildSuccessResult(payload)
+    return addMetaToPayload(successResult, httpResponse)
+  } else {
+    let errorResult = buildErrorResult(payload)
+    return addMetaToPayload(errorResult, httpResponse)
+  }
+})
+
+function buildSuccessResult (payload) {
+  return {
+    success: true,
+    payload
+  }
+}
+
+function buildErrorResult (error) {
+  return {
+    success: false,
+    error
+  }
 }
 
 function addMetaToPayload (payload, httpResponse) {
