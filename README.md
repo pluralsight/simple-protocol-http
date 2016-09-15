@@ -60,6 +60,10 @@ The value of result is:
 This module is compatible with simple protocol responses.
 
 ### For Success Responses:
+```
+const { get } = require('simple-protocol-http').defaults
+let result = await get('http://www.example.com/api')
+```
 If the server returns this:
 ```
 {
@@ -85,6 +89,10 @@ This module will return this:
 ```
 
 ### For Unsuccessful Responses:
+```
+const { get } = require('simple-protocol-http').defaults
+let result = await get('http://www.example.com/api')
+```
 If the server returns this:
 ```
 {
