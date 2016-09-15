@@ -39,6 +39,38 @@ describe('simple protocol', () => {
   ]
 
   config.forEach(({fn, method, supportsPayloads}) => {
+    const makeRequest = () => {
+      let options = {
+        headers: {
+          'content-type': defaultJsonHeader,
+          test: 'test-request-header'
+        }
+      }
+
+      let body = {
+        foo: 'bar'
+      }
+
+      let args = [options, apiUrl]
+
+      if (supportsPayloads) {
+        args.push(body)
+      }
+
+      return fn.apply(null, args)
+    }
+
+    const validateRequest = (getRequestData) => {
+      let { body, headers } = getRequestData()
+      if (supportsPayloads) {
+        deep(body, {
+          foo: 'bar'
+        })
+      }
+      deep(headers['content-type'], defaultJsonHeader)
+      deep(headers['test'], 'test-request-header')
+    }
+
     describe(method, () => {
       it(`should normalize http response to simple protocol`, co.wrap(function * () {
         let { getRequestData } = yield startServer({
@@ -48,24 +80,10 @@ describe('simple protocol', () => {
           }
         })
 
-        let result = yield fn({
-          headers: {
-            'content-type': defaultJsonHeader,
-            test: 'test-request-header'
-          }
-        }, apiUrl, {
-          foo: 'bar'
-        })
+        let result = yield makeRequest()
 
         //  validate request
-        let { body, headers } = getRequestData()
-        if (supportsPayloads) {
-          deep(body, {
-            foo: 'bar'
-          })
-        }
-        deep(headers['content-type'], defaultJsonHeader)
-        deep(headers['test'], 'test-request-header')
+        validateRequest(getRequestData)
 
         //  validate response
         validateTestHeader(result)
@@ -88,24 +106,10 @@ describe('simple protocol', () => {
           payload: 'hi'
         })
 
-        let result = yield fn({
-          headers: {
-            'content-type': defaultJsonHeader,
-            test: 'test-request-header'
-          }
-        }, apiUrl, {
-          foo: 'bar'
-        })
+        let result = yield makeRequest()
 
         //  validate request
-        let { body, headers } = getRequestData()
-        if (supportsPayloads) {
-          deep(body, {
-            foo: 'bar'
-          })
-        }
-        deep(headers['content-type'], defaultJsonHeader)
-        deep(headers['test'], 'test-request-header')
+        validateRequest(getRequestData)
 
         //  validate response
         validateTestHeader(result)
@@ -129,24 +133,10 @@ describe('simple protocol', () => {
           }
         })
 
-        let result = yield fn({
-          headers: {
-            'content-type': defaultJsonHeader,
-            test: 'test-request-header'
-          }
-        }, apiUrl, {
-          foo: 'bar'
-        })
+        let result = yield makeRequest()
 
         //  validate request
-        let { body, headers } = getRequestData()
-        if (supportsPayloads) {
-          deep(body, {
-            foo: 'bar'
-          })
-        }
-        deep(headers['content-type'], defaultJsonHeader)
-        deep(headers['test'], 'test-request-header')
+        validateRequest(getRequestData)
 
         //  validate response
         validateTestHeader(result)
@@ -172,24 +162,10 @@ describe('simple protocol', () => {
           }
         })
 
-        let result = yield fn({
-          headers: {
-            'content-type': defaultJsonHeader,
-            test: 'test-request-header'
-          }
-        }, apiUrl, {
-          foo: 'bar'
-        })
+        let result = yield makeRequest()
 
         //  validate request
-        let { body, headers } = getRequestData()
-        if (supportsPayloads) {
-          deep(body, {
-            foo: 'bar'
-          })
-        }
-        deep(headers['content-type'], defaultJsonHeader)
-        deep(headers['test'], 'test-request-header')
+        validateRequest(getRequestData)
 
         //  validate response
         validateTestHeader(result)
@@ -217,24 +193,10 @@ describe('simple protocol', () => {
           }
         })
 
-        let result = yield fn({
-          headers: {
-            'content-type': defaultJsonHeader,
-            test: 'test-request-header'
-          }
-        }, apiUrl, {
-          foo: 'bar'
-        })
+        let result = yield makeRequest()
 
         //  validate request
-        let { body, headers } = getRequestData()
-        if (supportsPayloads) {
-          deep(body, {
-            foo: 'bar'
-          })
-        }
-        deep(headers['content-type'], defaultJsonHeader)
-        deep(headers['test'], 'test-request-header')
+        validateRequest(getRequestData)
 
         //  validate response
         validateTestHeader(result)
@@ -262,24 +224,10 @@ describe('simple protocol', () => {
           }
         })
 
-        let result = yield fn({
-          headers: {
-            'content-type': defaultJsonHeader,
-            test: 'test-request-header'
-          }
-        }, apiUrl, {
-          foo: 'bar'
-        })
+        let result = yield makeRequest()
 
         //  validate request
-        let { body, headers } = getRequestData()
-        if (supportsPayloads) {
-          deep(body, {
-            foo: 'bar'
-          })
-        }
-        deep(headers['content-type'], defaultJsonHeader)
-        deep(headers['test'], 'test-request-header')
+        validateRequest(getRequestData)
 
         //  validate response
         validateTestHeader(result)
