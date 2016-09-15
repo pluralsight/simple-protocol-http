@@ -31,6 +31,8 @@ That's it!  Both success and error cases are handled the same way and can follow
 npm i --save simple-protocol-http
 ```
 
+## Example Using Standard Restful Endpoints
+
 ### For successful / non-200-range responses
 ```
 const { get } = require('simple-protocol-http').defaults
@@ -85,8 +87,7 @@ The value of result is:
 }
 ```
 
-## Simple Protocol
-This module is compatible with simple protocol responses.
+## Example Using Simple Protocol Endpoints
 
 ### For Success Responses:
 ```
