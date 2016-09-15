@@ -62,7 +62,7 @@ remove(fetchOptions, url, payload)
 
 ```
 
-With fetch and fetch options pre-curried in:
+With fetch and fetch options pre-curried in.  This is what I like to use for most things:
 
 ```
 const { get, post, put, remove} = require('simple-protocol-http')
