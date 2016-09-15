@@ -62,7 +62,7 @@ describe('simple protocol', () => {
       deep(headers['test'], 'test-request-header')
     }
 
-    function validateTestHeader (result) {
+    function validateHeaders (result) {
       deep(result.meta.headers.test, 'test-header')
     }
 
@@ -83,9 +83,8 @@ describe('simple protocol', () => {
 
         validateRequest(getRequestData)
 
-        validateTestHeader(result)
+        validateHeaders(result)
 
-        //  validate response
         validateResult(result, {
           success: true,
           payload: {
@@ -109,9 +108,8 @@ describe('simple protocol', () => {
 
         validateRequest(getRequestData)
 
-        validateTestHeader(result)
+        validateHeaders(result)
 
-        //  validate response
         validateResult(result, {
           success: true,
           payload: 'hi',
@@ -136,9 +134,8 @@ describe('simple protocol', () => {
 
         validateRequest(getRequestData)
 
-        validateTestHeader(result)
+        validateHeaders(result)
 
-        //  validate response
         validateResult(result, {
           success: true,
           payload: {},
@@ -165,9 +162,8 @@ describe('simple protocol', () => {
 
         validateRequest(getRequestData)
 
-        validateTestHeader(result)
+        validateHeaders(result)
 
-        //  validate response
         validateResult(result, {
           success: false,
           error: {
@@ -196,9 +192,8 @@ describe('simple protocol', () => {
 
         validateRequest(getRequestData)
 
-        validateTestHeader(result)
+        validateHeaders(result)
 
-        //  validate response
         validateResult(result, {
           success: true,
           payload: {
@@ -227,9 +222,8 @@ describe('simple protocol', () => {
 
         validateRequest(getRequestData)
 
-        validateTestHeader(result)
+        validateHeaders(result)
 
-        //  validate response
         validateResult(result, {
           success: false,
           error: {
