@@ -1,35 +1,30 @@
 const co = require('co')
 const deep = require('assert').deepEqual
-const { post, get, put, remove, fetch } = require('./simple')
+const { post, get, put, remove } = require('./simple')
 const { startServer } = require('./test/server')
 const defaultJsonHeader = 'application/json;charset=UTF-8'
 const apiUrl = 'http://localhost:3001'
-
-const testPost = post(fetch)
-const testPut = put(fetch)
-const testGet = (options, url) => get(fetch, options, url)
-const testRemove = (options, url) => remove(fetch, options, url)
 
 describe('simple protocol', () => {
   let config = [
     {
       method: 'get',
-      fn: testGet,
+      fn: get,
       supportsPayloads: false
     },
     {
       method: 'post',
-      fn: testPost,
+      fn: post,
       supportsPayloads: true
     },
     {
       method: 'put',
-      fn: testPut,
+      fn: put,
       supportsPayloads: true
     },
     {
       method: 'delete',
-      fn: testRemove,
+      fn: remove,
       supportsPayloads: false
     }
   ]
@@ -247,8 +242,7 @@ describe('simple protocol', () => {
   })
 
   it('should handle fetch error', co.wrap(function * () {
-    const testPost = post(fetch, {}, 'http://doesnotexist.nope')
-    let result = yield testPost({})
+    let result = yield post({}, 'http://doesnotexist.nope', {})
     deep(result.success, false)
     deep(result.error.name, 'FetchError')
     deep(result.meta, {})
