@@ -11,10 +11,6 @@ const testGet = (options, url) => get(fetch, options, url)
 const testRemove = (options, url) => remove(fetch, options, url)
 
 describe('simple protocol', () => {
-  function validateTestHeader (result) {
-    deep(result.meta.headers.test, 'test-header')
-  }
-
   let config = [
     {
       method: 'get',
@@ -71,6 +67,10 @@ describe('simple protocol', () => {
       deep(headers['test'], 'test-request-header')
     }
 
+    function validateTestHeader (result) {
+      deep(result.meta.headers.test, 'test-header')
+    }
+
     describe(method, () => {
       it(`should normalize http response to simple protocol`, co.wrap(function * () {
         let { getRequestData } = yield startServer({
@@ -82,11 +82,11 @@ describe('simple protocol', () => {
 
         let result = yield makeRequest()
 
-        //  validate request
         validateRequest(getRequestData)
 
-        //  validate response
         validateTestHeader(result)
+
+        //  validate response
         deep(result, {
           success: true,
           payload: {
@@ -108,11 +108,11 @@ describe('simple protocol', () => {
 
         let result = yield makeRequest()
 
-        //  validate request
         validateRequest(getRequestData)
 
-        //  validate response
         validateTestHeader(result)
+
+        //  validate response
         deep(result, {
           success: true,
           payload: 'hi',
@@ -135,11 +135,11 @@ describe('simple protocol', () => {
 
         let result = yield makeRequest()
 
-        //  validate request
         validateRequest(getRequestData)
 
-        //  validate response
         validateTestHeader(result)
+
+        //  validate response
         deep(result, {
           success: true,
           payload: {},
@@ -164,11 +164,11 @@ describe('simple protocol', () => {
 
         let result = yield makeRequest()
 
-        //  validate request
         validateRequest(getRequestData)
 
-        //  validate response
         validateTestHeader(result)
+
+        //  validate response
         deep(result, {
           success: false,
           error: {
@@ -195,11 +195,11 @@ describe('simple protocol', () => {
 
         let result = yield makeRequest()
 
-        //  validate request
         validateRequest(getRequestData)
 
-        //  validate response
         validateTestHeader(result)
+
+        //  validate response
         deep(result, {
           success: true,
           payload: {
@@ -226,11 +226,11 @@ describe('simple protocol', () => {
 
         let result = yield makeRequest()
 
-        //  validate request
         validateRequest(getRequestData)
 
-        //  validate response
         validateTestHeader(result)
+
+        //  validate response
         deep(result, {
           success: false,
           error: {
