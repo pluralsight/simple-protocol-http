@@ -66,6 +66,10 @@ describe('simple protocol', () => {
       deep(result.meta.headers.test, 'test-header')
     }
 
+    function validateResult (actual, expected) {
+      deep(actual, expected)
+    }
+
     describe(method, () => {
       it(`should normalize http response to simple protocol`, co.wrap(function * () {
         let { getRequestData } = yield startServer({
@@ -82,7 +86,7 @@ describe('simple protocol', () => {
         validateTestHeader(result)
 
         //  validate response
-        deep(result, {
+        validateResult(result, {
           success: true,
           payload: {
             message: 'hi'
@@ -108,7 +112,7 @@ describe('simple protocol', () => {
         validateTestHeader(result)
 
         //  validate response
-        deep(result, {
+        validateResult(result, {
           success: true,
           payload: 'hi',
           meta: {
@@ -135,7 +139,7 @@ describe('simple protocol', () => {
         validateTestHeader(result)
 
         //  validate response
-        deep(result, {
+        validateResult(result, {
           success: true,
           payload: {},
           meta: {
@@ -164,7 +168,7 @@ describe('simple protocol', () => {
         validateTestHeader(result)
 
         //  validate response
-        deep(result, {
+        validateResult(result, {
           success: false,
           error: {
             message: 'something bad happened'
@@ -195,7 +199,7 @@ describe('simple protocol', () => {
         validateTestHeader(result)
 
         //  validate response
-        deep(result, {
+        validateResult(result, {
           success: true,
           payload: {
             message: 'hi'
@@ -226,7 +230,7 @@ describe('simple protocol', () => {
         validateTestHeader(result)
 
         //  validate response
-        deep(result, {
+        validateResult(result, {
           success: false,
           error: {
             message: 'this is bad'
