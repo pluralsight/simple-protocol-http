@@ -1,6 +1,35 @@
 # Simple Protocol Http
 
-This module normalizes http responses using a simple, predictable protocol.  The http response body is parsed as JSON by default but gracefully falls back to text if the response body is not valid JSON.
+This module normalizes http responses using a simple protocol.  The http response body is parsed as JSON by default but gracefully falls back to text if the response body is not valid JSON.
+
+## What is simple protocol?
+
+Simple protocol is *simple*:  
+1) Never intentionally throw or swallow exceptions.  
+2) Return an object like this for a success:
+```
+{
+  success: true,
+  payload: {
+    // the main value, i.e. the http response body
+  }
+}
+```
+3) Return an object like this for an error:
+```
+{
+  success: false,
+  payload: {
+    // error details
+  }
+}
+```
+That's it!  Both success and error cases are handled the same way and can follow the same code path.
+
+## Installation
+```
+npm i --save simple-protocol-http
+```
 
 ### For successful / non-200-range responses
 ```
