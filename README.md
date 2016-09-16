@@ -31,7 +31,7 @@ That's it!  Both success and error cases are handled the same way and can follow
 npm i --save simple-protocol-http
 ```
 
-## Function Variations for Convenience
+## API
 
 This module exposes a few function variations with lesser-used arguments pre-curried in.
 
