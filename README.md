@@ -6,7 +6,7 @@ This module normalizes http responses using Simple Protocol.  HTTP response bodi
 
 Simple protocol is *simple*:  
 1) Never intentionally throw exceptions / always return with a 200 status code.  
-2) Return an object like this for a success:
+2) Return a valid JSON object like this for a success:
 ```
 {
   success: true,
@@ -15,7 +15,7 @@ Simple protocol is *simple*:
   }
 }
 ```
-3) Return an object like this for an error:
+3) Return a valid JSON object like this for an error:
 ```
 {
   success: false,
