@@ -11,7 +11,7 @@ Simple protocol is *simple*:
 {
   success: true,
   payload: {
-    // the main value, i.e. the http response body
+    // the result of the operation, i.e. an http response body
   }
 }
 ```
@@ -33,10 +33,6 @@ npm i --save simple-protocol-http
 
 ## API
 
-This module exposes a few function variations with lesser-used arguments pre-curried in.
-
-This is what I like to use for most things:
-
 ```
 const { get, post, put, remove} = require('simple-protocol-http')
 
@@ -49,7 +45,7 @@ remove(url)
 
 ```
 
-With fetch pre-curried in:
+If you want to send custom fetch options (i.e. send custom headers, etc):
 
 ```
 const { get, post, put, remove} = require('simple-protocol-http').options
