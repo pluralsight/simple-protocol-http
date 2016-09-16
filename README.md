@@ -36,12 +36,10 @@ npm i --save simple-protocol-http
 ```
 const { get, post, put, remove} = require('simple-protocol-http')
 
-Function Signatures
-
-get(url)
-post(url, payload)
-put(url, payload)
-remove(url)
+let result = await get(url)
+let result = await post(url, payload)
+let result = await put(url, payload)
+let result = await remove(url)
 
 ```
 
@@ -50,12 +48,10 @@ If you want to send custom fetch options (i.e. send custom headers, etc):
 ```
 const { get, post, put, remove} = require('simple-protocol-http').options
 
-Function Signatures
-
-get(fetchOptions, url)
-post(fetchOptions, url, payload)
-put(fetchOptions, url, payload)
-remove(fetchOptions, url)
+let result = await get(fetchOptions, url)
+let result = await post(fetchOptions, url, payload)
+let result = await put(fetchOptions, url, payload)
+let result = await remove(fetchOptions, url)
 
 ```
 
@@ -63,12 +59,10 @@ The whole enchilada, i.e. full referential transparency:
 ```
 const { get, post, put, remove} = require('simple-protocol-http').full
 
-Function Signatures
-
-get(fetch, fetchOptions, url)
-post(fetch, fetchOptions, url, payload)
-put(fetch, fetchOptions, url, payload)
-remove(fetch, fetchOptions, url)
+let result = await get(fetch, fetchOptions, url)
+let result = await post(fetch, fetchOptions, url, payload)
+let result = await put(fetch, fetchOptions, url, payload)
+let result = await remove(fetch, fetchOptions, url)
 
 ```
 
