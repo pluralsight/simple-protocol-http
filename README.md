@@ -72,7 +72,7 @@ remove(fetch, fetchOptions, url)
 
 ```
 
-## Example Using Standard Restful Endpoints
+## Examples Making Requests to Restful Endpoints
 
 ### For successful / 200-range responses
 ```
@@ -102,8 +102,8 @@ The value of result is:
 
 ### For error / non-200-range responses:
 ```
-const { get } = require('simple-protocol-http')
-let result = await get('http://www.example.com/api')
+const { post } = require('simple-protocol-http')
+let result = await post('http://www.example.com/api', {...})
 ```
 If the server returns this with a 400 status code:
 ```
@@ -132,8 +132,8 @@ The value of result is:
 
 ### For Success Responses:
 ```
-const { get } = require('simple-protocol-http')
-let result = await get('http://www.example.com/api')
+const { post } = require('simple-protocol-http')
+let result = await post('http://www.example.com/api', {...})
 ```
 If the server returns this:
 ```
@@ -161,8 +161,8 @@ This module will return this:
 
 ### For Unsuccessful Responses:
 ```
-const { get } = require('simple-protocol-http')
-let result = await get('http://www.example.com/api')
+const { post } = require('simple-protocol-http')
+let result = await post('http://www.example.com/api', {...})
 ```
 If the server returns this:
 ```
