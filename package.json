@@ -1,6 +1,6 @@
 {
   "name": "simple-protocol-http",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,9 +13,11 @@
   "license": "ISC",
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
-    "mocha": "^3.0.2",
     "ramda": "^0.22.1",
-    "safe-errors": "0.2.0"
+    "safe-errors": "0.3.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.0.2"
   },
   "standard": {
     "globals": [
